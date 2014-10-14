@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Plugins\LeapMotionScript.cs">
+    <Files>
+      <File FileName="LeapMotionPlusOculusRift.sln" Line="58" Column="1" />
+      <File FileName="Assets\Plugins\NetManager.cs" Line="78" Column="55" />
+      <File FileName="Assets\Plugins\HeadScript.cs" Line="15" Column="1" />
+      <File FileName="Assets\Plugins\LeapMotionScript.cs" Line="71" Column="1" />
+      <File FileName="Assets\Plugins\HandScript.cs" Line="14" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
