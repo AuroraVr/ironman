@@ -43,7 +43,7 @@ public class NetManager : MonoBehaviour {
 		GameObject head_temp = (GameObject) Network.Instantiate(head, player1spawn.transform.position, player1spawn.transform.rotation, 0);
 		GameObject ovr_temp = (GameObject) Instantiate(ovrCamera, player1spawn.transform.position, player1spawn.transform.rotation);
 		GameObject body_temp = (GameObject) Network.Instantiate(body, player1spawn.transform.position, player1spawn.transform.rotation,0);
-		GameObject handctrl = (GameObject) Instantiate(handController, player1spawn.transform.position, player1spawn.transform.rotation);
+		GameObject handctrl = (GameObject) Network.Instantiate(handController, player1spawn.transform.position, player1spawn.transform.rotation, 0);
 
 		//configuring head
 		head_temp.GetComponent<HeadScript>().toFollow = GameObject.Find("CameraLeft");
@@ -71,7 +71,7 @@ public class NetManager : MonoBehaviour {
 		GameObject head_temp = (GameObject) Network.Instantiate(head, player2spawn.transform.position, player2spawn.transform.rotation, 0);
 		GameObject ovr_temp = (GameObject) Instantiate(ovrCamera, player2spawn.transform.position, player2spawn.transform.rotation);
 		GameObject body_temp = (GameObject) Network.Instantiate(body, player2spawn.transform.position, player2spawn.transform.rotation,0);
-		GameObject handctrl = (GameObject) Instantiate(handController, player2spawn.transform.position, player2spawn.transform.rotation);
+		GameObject handctrl = (GameObject) Network.Instantiate(handController, player2spawn.transform.position, player2spawn.transform.rotation,0);
 		
 		//configuring head
 		head_temp.GetComponent<HeadScript>().toFollow = GameObject.Find("CameraLeft");

@@ -51,27 +51,29 @@ public class HandController : MonoBehaviour {
   }
 
   void Start() {
-    leap_controller_ = new Controller();
-    
-    Controller.PolicyFlag policy_flags = leap_controller_.PolicyFlags;
-    if (isHeadMounted)
-      policy_flags |= Controller.PolicyFlag.POLICY_OPTIMIZE_HMD;
-    else
-      policy_flags &= ~Controller.PolicyFlag.POLICY_OPTIMIZE_HMD;
-    // leap_controller_.SetPolicyFlags(policy_flags);
-
-    hand_graphics_ = new Dictionary<int, HandModel>();
-    hand_physics_ = new Dictionary<int, HandModel>();
-
-    tools_ = new Dictionary<int, ToolModel>();
-
-    if (leap_controller_ == null) {
-      Debug.LogWarning(
-          "Cannot connect to controller. Make sure you have Leap Motion v2.0+ installed");
-    }
-
-    if (enableRecordPlayback && recordingAsset != null)
-      recorder_.Load(recordingAsset);
+	if(networkView.isMine){
+		leap_controller_ = new Controller();
+		
+		Controller.PolicyFlag policy_flags = leap_controller_.PolicyFlags;
+		if (isHeadMounted)
+			policy_flags |= Controller.PolicyFlag.POLICY_OPTIMIZE_HMD;
+		else
+			policy_flags &= ~Controller.PolicyFlag.POLICY_OPTIMIZE_HMD;
+		// leap_controller_.SetPolicyFlags(policy_flags);
+		
+		hand_graphics_ = new Dictionary<int, HandModel>();
+		hand_physics_ = new Dictionary<int, HandModel>();
+		
+		tools_ = new Dictionary<int, ToolModel>();
+		
+		if (leap_controller_ == null) {
+			Debug.LogWarning(
+				"Cannot connect to controller. Make sure you have Leap Motion v2.0+ installed");
+		}
+		
+		if (enableRecordPlayback && recordingAsset != null)
+			recorder_.Load(recordingAsset);
+	}
   }
 
   private void IgnoreCollisions(GameObject first, GameObject second, bool ignore = true) {

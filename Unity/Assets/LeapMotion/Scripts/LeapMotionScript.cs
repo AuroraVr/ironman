@@ -40,57 +40,56 @@ public class LeapMotionScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		f = m_leapController.Frame();
-		//Transform camera = GameObject.Find("Camera").transform;
-		//HideInactiveHands(f.Hands);
-		if ((f.Hands.Count > 0)&&(f.Hands[0].IsRight)){
-			hand = f.Hands[0];
-			position = hand.PalmPosition;
-
-			if(previousFrame!=null){
-				Vector rotationAxis = f.RotationAxis(previousFrame);
-				int multiplier;
-
-
-				if(getHandClosed(hand)){
-					//Information about the hand that is closed
-					GameObject handObj = GameObject.Find("RigidHand(Clone)");
-					Vector3 hand_position = handObj.transform.Find("palm").position;
-					Quaternion hand_rotation = handObj.transform.Find("palm").rotation;
-					fireball_instance = (Transform) Instantiate(fireball, hand_position, hand_rotation);
-					//fireball_instance.parent = transform;
+		if(networkView.isMine){
+			f = m_leapController.Frame();
+			//Transform camera = GameObject.Find("Camera").transform;
+			//HideInactiveHands(f.Hands);
+			if ((f.Hands.Count > 0)&&(f.Hands[0].IsRight)){
+				hand = f.Hands[0];
+				position = hand.PalmPosition;
+				
+				if(previousFrame!=null){
+					Vector rotationAxis = f.RotationAxis(previousFrame);
+					int multiplier;
 					
-				}
-				if( (fireball_instance!=null) && (isClosed(hand)) ){
-					Vector3 hand_position = GameObject.Find("RigidHand(Clone)").transform.Find("palm").position;
-					fireball_instance.position = hand_position;
-				}
-				if(getHandOpen(hand)){
-					//Debug.Log("ABRIU");
-					Vector3 hand_position = GameObject.Find("RigidHand(Clone)").transform.Find("palm").position;
-					if(fireball_instance==null)
-					return;
-					else{
-						fireball_instance.position = hand_position;
-						fireball_instance.GetComponent<FireBallScript>().start_moving();
+					
+					if(getHandClosed(hand)){
+						//Information about the hand that is closed
+						GameObject handObj = GameObject.Find("RigidHand(Clone)");
+						Vector3 hand_position = handObj.transform.Find("palm").position;
+						Quaternion hand_rotation = handObj.transform.Find("palm").rotation;
+						fireball_instance = (Transform) Instantiate(fireball, hand_position, hand_rotation);
+						//fireball_instance.parent = transform;
+						
 					}
-					//Vector3 hand_position = new Vector3(0,0,0);
-					//fireball.GetComponent<move>().enabled = false;
-					//Instantiate(fireball, hand_position, Quaternion.identity);
+					if( (fireball_instance!=null) && (isClosed(hand)) ){
+						Vector3 hand_position = GameObject.Find("RigidHand(Clone)").transform.Find("palm").position;
+						fireball_instance.position = hand_position;
+					}
+					if(getHandOpen(hand)){
+						//Debug.Log("ABRIU");
+						Vector3 hand_position = GameObject.Find("RigidHand(Clone)").transform.Find("palm").position;
+						if(fireball_instance==null)
+							return;
+						else{
+							fireball_instance.position = hand_position;
+							fireball_instance.GetComponent<FireBallScript>().start_moving();
+						}
+						//Vector3 hand_position = new Vector3(0,0,0);
+						//fireball.GetComponent<move>().enabled = false;
+						//Instantiate(fireball, hand_position, Quaternion.identity);
+						
+					}
 					
+					
+					
+				}else{
+					previousFrame = f;
 				}
-				
-				
-				
 			}else{
-				previousFrame = f;
+				previousFrame = null;
 			}
-		}else{
-			previousFrame = null;
 		}
-	
-		
 	}
 	void HideInactiveHands(HandList hands){
 
