@@ -16,7 +16,7 @@ public class NetManager : MonoBehaviour {
 	public GameObject ovrCamera;
 
 	public void StartServer(){
-		Network.InitializeServer(4, 25002, false);
+		Network.InitializeServer(4, 25000, !Network.HavePublicAddress());
 		MasterServer.RegisterHost(registeredGameName, gameName);
 	}
 
@@ -102,16 +102,16 @@ public class NetManager : MonoBehaviour {
 		if(Network.isClient || Network.isServer)
 			return;
 
-		if(GUI.Button(new Rect(25f, 25f, 150f, 30f), "start server")){
+		if(GUI.Button(new Rect(Screen.height/2 - 200, Screen.width/2 - 200, 150f, 30f), "start server")){
 			StartServer();
 		}
-		if(GUI.Button(new Rect(25f, 65f, 150f, 30f), "Refresh server")){
+		if(GUI.Button(new Rect(Screen.height/2 - 200, Screen.width/2 + 30 - 200, 150f, 30f), "Refresh server")){
 			StartCoroutine("refreshHostList");
 		}
 
 		if(hostData != null){
 			for (int i=0; i<hostData.Length; i++){
-				if(GUI.Button(new Rect(200f,25f * i, 150f, 30f), hostData[i].gameName)){
+				if(GUI.Button(new Rect(Screen.height/2 - 200,Screen.width/2 - 200 + 60, 150f, 30f), hostData[i].gameName)){
 					Network.Connect(hostData[i]);
 				}
 			}
