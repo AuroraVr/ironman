@@ -72,6 +72,9 @@
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>C:/Users/Eduardo/GitHub/ironman/Unity/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
+ <Reference Include="Assembly-UnityScript">
+ <HintPath>C:/Users/Eduardo/GitHub/ironman/Unity/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
+ </Reference>
  <Reference Include="LeapCSharp.NET3.5">
  <HintPath>C:/Users/Eduardo/GitHub/ironman/Unity/Assets/Plugins/LeapCSharp.NET3.5.dll</HintPath>
  </Reference>
