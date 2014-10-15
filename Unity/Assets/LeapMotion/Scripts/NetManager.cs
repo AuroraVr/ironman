@@ -37,6 +37,7 @@ public class NetManager : MonoBehaviour {
 
 	}
 
+	//Server site
 	void OnServerInitialized(){
 		//Initializing Server player
 		Debug.Log("Server Initialized");
@@ -65,6 +66,7 @@ public class NetManager : MonoBehaviour {
 
 	}
 
+	//Cliente side
 	void OnConnectedToServer(){
 		//Initializing Server player
 		Debug.Log("Server Initialized");

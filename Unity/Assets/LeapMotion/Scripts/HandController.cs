@@ -102,7 +102,7 @@ public class HandController : MonoBehaviour {
 	}
 
   private HandModel CreateHand(HandModel model) {
-    HandModel hand_model = Instantiate(model, transform.position, transform.rotation)
+    HandModel hand_model = Network.Instantiate(model, transform.position, transform.rotation, 0)
                            as HandModel;
 	//MODIFIED HERE//
 	//hand_model.transform.parent = transform.parent;
