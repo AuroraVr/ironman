@@ -49,7 +49,7 @@ public class FireBallScript : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		Instantiate(detonator, transform.position, transform.rotation);
-		Destroy(this.gameObject);
+		Network.Destroy(this.gameObject);
 	}
 
 	private IEnumerator enableCollisionHelper(float seconds){

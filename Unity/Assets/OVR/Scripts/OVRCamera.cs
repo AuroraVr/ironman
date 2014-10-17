@@ -101,7 +101,7 @@ public class OVRCamera : MonoBehaviour
 	/// <summary>
 	/// Increase position captured by the camera
 	/// </summary>
-	static float increasePosition = 5.0f;
+	static float increasePosition = 10.0f;
 	/// <summary>
 	// We will grab the actual orientation that is used by the cameras in a shared location.
 	// This will allow multiple OVRCameraControllers to eventually be used in a scene, and 

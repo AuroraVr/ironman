@@ -58,7 +58,7 @@ public class LeapMotionScript : MonoBehaviour {
 						GameObject handObj = GameObject.Find("RigidHand(Clone)");
 						Vector3 hand_position = handObj.transform.Find("palm").position;
 						Quaternion hand_rotation = handObj.transform.Find("palm").rotation;
-						fireball_instance = (Transform) Instantiate(fireball, hand_position, hand_rotation);
+						fireball_instance = (Transform) Network.Instantiate(fireball, hand_position, hand_rotation, 0);
 						//fireball_instance.parent = transform;
 						
 					}

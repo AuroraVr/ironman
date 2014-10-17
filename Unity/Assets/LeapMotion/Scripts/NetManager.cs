@@ -14,6 +14,7 @@ public class NetManager : MonoBehaviour {
 	public GameObject body;
 	public GameObject handController;
 	public GameObject ovrCamera;
+	public GameObject wall;
 
 	public void StartServer(){
 		Network.InitializeServer(4, 25000, !Network.HavePublicAddress());
@@ -46,6 +47,7 @@ public class NetManager : MonoBehaviour {
 		GameObject body_temp = (GameObject) Network.Instantiate(body, player1spawn.transform.position, player1spawn.transform.rotation,0);
 		GameObject handctrl = (GameObject) Network.Instantiate(handController, player1spawn.transform.position, player1spawn.transform.rotation, 0);
 
+
 		//configuring head
 		head_temp.GetComponent<HeadScript>().toFollow = GameObject.Find("CameraLeft");
 		head_temp.transform.parent = player1spawn.transform;
@@ -63,10 +65,11 @@ public class NetManager : MonoBehaviour {
 		handctrl.GetComponent<HandScript>().toFollow = GameObject.Find("CameraLeft");
 		handctrl.transform.parent = GameObject.Find("CameraLeft").transform;
 		handctrl.transform.localEulerAngles = new Vector3(270f,180f,0f);
+		handctrl.transform.localPosition = new Vector3(0f, -0.2f, 0f);
 
 	}
 
-	//Cliente side
+	//Client side
 	void OnConnectedToServer(){
 		//Initializing Server player
 		Debug.Log("Server Initialized");
@@ -74,17 +77,18 @@ public class NetManager : MonoBehaviour {
 		GameObject ovr_temp = (GameObject) Instantiate(ovrCamera, player2spawn.transform.position, player2spawn.transform.rotation);
 		GameObject body_temp = (GameObject) Network.Instantiate(body, player2spawn.transform.position, player2spawn.transform.rotation,0);
 		GameObject handctrl = (GameObject) Network.Instantiate(handController, player2spawn.transform.position, player2spawn.transform.rotation,0);
+
 		
 		//configuring head
 		head_temp.GetComponent<HeadScript>().toFollow = GameObject.Find("CameraLeft");
-		head_temp.transform.parent = player1spawn.transform;
+		head_temp.transform.parent = player2spawn.transform;
 		
 		//configuring body
 		body_temp.GetComponent<RobotWarrior>().head = GameObject.Find("CameraLeft").transform;
 		body_temp.GetComponent<RobotWarrior>().xOffset = 0.0f;
 		body_temp.GetComponent<RobotWarrior>().yOffset = -4.5f;
-		body_temp.GetComponent<RobotWarrior>().zOffset = -0.2f;
-		body_temp.transform.parent = player1spawn.transform;
+		body_temp.GetComponent<RobotWarrior>().zOffset = 0f;
+		body_temp.transform.parent = player2spawn.transform;
 		
 		//configuring hand controller
 		handctrl.GetComponent<LeapMotionScript>().left_hand = GameObject.Find("TerminatorLeft");
@@ -92,6 +96,7 @@ public class NetManager : MonoBehaviour {
 		handctrl.GetComponent<HandScript>().toFollow = GameObject.Find("CameraLeft");
 		handctrl.transform.parent = GameObject.Find("CameraLeft").transform;
 		handctrl.transform.localEulerAngles = new Vector3(270f,180f,0f);
+		handctrl.transform.localPosition = new Vector3(0f, -0.2f, 0f);
 	}
 
 	void OnMasterServerEvent(MasterServerEvent masterServerEvent){
@@ -104,16 +109,16 @@ public class NetManager : MonoBehaviour {
 		if(Network.isClient || Network.isServer)
 			return;
 
-		if(GUI.Button(new Rect(Screen.height/2 - 200, Screen.width/2 - 200, 150f, 30f), "start server")){
+		if(GUI.Button(new Rect(Screen.width/2 - 200, Screen.height/2 - 200, 300f, 100f), "start server")){
 			StartServer();
 		}
-		if(GUI.Button(new Rect(Screen.height/2 - 200, Screen.width/2 + 30 - 200, 150f, 30f), "Refresh server")){
+		if(GUI.Button(new Rect(Screen.width/2 - 200, Screen.height/2 - 200 + 100, 300f, 100f), "Refresh server")){
 			StartCoroutine("refreshHostList");
 		}
 
 		if(hostData != null){
 			for (int i=0; i<hostData.Length; i++){
-				if(GUI.Button(new Rect(Screen.height/2 - 200,Screen.width/2 - 200 + 60, 150f, 30f), hostData[i].gameName)){
+				if(GUI.Button(new Rect(Screen.width/2 - 200, Screen.height/2 - 200 + 200, 300f, 100f), hostData[i].gameName)){
 					Network.Connect(hostData[i]);
 				}
 			}

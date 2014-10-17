@@ -51,29 +51,28 @@ public class HandController : MonoBehaviour {
   }
 
   void Start() {
-	if(networkView.isMine){
-		leap_controller_ = new Controller();
-		
-		Controller.PolicyFlag policy_flags = leap_controller_.PolicyFlags;
-		if (isHeadMounted)
-			policy_flags |= Controller.PolicyFlag.POLICY_OPTIMIZE_HMD;
-		else
-			policy_flags &= ~Controller.PolicyFlag.POLICY_OPTIMIZE_HMD;
-		// leap_controller_.SetPolicyFlags(policy_flags);
-		
-		hand_graphics_ = new Dictionary<int, HandModel>();
-		hand_physics_ = new Dictionary<int, HandModel>();
-		
-		tools_ = new Dictionary<int, ToolModel>();
-		
-		if (leap_controller_ == null) {
-			Debug.LogWarning(
-				"Cannot connect to controller. Make sure you have Leap Motion v2.0+ installed");
-		}
-		
-		if (enableRecordPlayback && recordingAsset != null)
-			recorder_.Load(recordingAsset);
+	leap_controller_ = new Controller();
+	
+	Controller.PolicyFlag policy_flags = leap_controller_.PolicyFlags;
+	if (isHeadMounted)
+		policy_flags |= Controller.PolicyFlag.POLICY_OPTIMIZE_HMD;
+	else
+		policy_flags &= ~Controller.PolicyFlag.POLICY_OPTIMIZE_HMD;
+	// leap_controller_.SetPolicyFlags(policy_flags);
+	
+	hand_graphics_ = new Dictionary<int, HandModel>();
+	hand_physics_ = new Dictionary<int, HandModel>();
+	
+	tools_ = new Dictionary<int, ToolModel>();
+	
+	if (leap_controller_ == null) {
+		Debug.LogWarning(
+			"Cannot connect to controller. Make sure you have Leap Motion v2.0+ installed");
 	}
+	
+	if (enableRecordPlayback && recordingAsset != null)
+		recorder_.Load(recordingAsset);
+
   }
 
   private void IgnoreCollisions(GameObject first, GameObject second, bool ignore = true) {
@@ -115,7 +114,7 @@ public class HandController : MonoBehaviour {
 
   private void DestroyHand(HandModel hand_model) {
     if (destroyHands)
-      Destroy(hand_model.gameObject);
+      Network.Destroy(hand_model.gameObject);
     else
       hand_model.SetLeapHand(null);
   }
@@ -139,7 +138,7 @@ public class HandController : MonoBehaviour {
         all_hands.Remove(leap_hand.Id);
       }
 
-      // Only create or update if the hand is enabled.
+      // Only create or update if the hand is enabled. 
       if (model != null) {
         ids_to_check.Remove(leap_hand.Id);
 
@@ -156,6 +155,7 @@ public class HandController : MonoBehaviour {
 
           new_hand.InitHand();
           new_hand.UpdateHand();
+
           all_hands[leap_hand.Id] = new_hand;
         }
         else {
@@ -170,6 +170,7 @@ public class HandController : MonoBehaviour {
           hand_model.UpdateHand();
         }
       }
+
     }
 
     // Destroy all hands with defunct IDs.
@@ -178,6 +179,16 @@ public class HandController : MonoBehaviour {
       all_hands.Remove(ids_to_check[i]);
     }
   }
+
+	private void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info){
+		if(stream.isWriting){
+
+
+		}
+		else{
+
+		}
+	}
 
   private ToolModel CreateTool(ToolModel model) {
     ToolModel tool_model = Instantiate(model, transform.position, transform.rotation)
@@ -237,13 +248,15 @@ public class HandController : MonoBehaviour {
   }
 
   void Update() {
-    if (leap_controller_ == null)
-      return;
-    
-    UpdateRecorder();
-    Frame frame = GetFrame();
-    UpdateHandModels(hand_graphics_, frame.Hands, leftGraphicsModel, rightGraphicsModel);
-  }
+	if(networkView.isMine){
+		if (leap_controller_ == null)
+			return;
+		
+		UpdateRecorder();
+		Frame frame = GetFrame();
+		UpdateHandModels(hand_graphics_, frame.Hands, leftGraphicsModel, rightGraphicsModel);
+	}
+}
 
   void FixedUpdate() {
     if (leap_controller_ == null)
